@@ -1,5 +1,7 @@
 <script>
 {{- $page := . -}}
+var page_kind = {{ $page.Kind }};
+var page_type = {{ $page.Type }};
 {{ if and $page.IsPage (eq $page.Type "post") -}}
 {{- with $page.ReadingTime -}}
 var est_reading_ms_100 = {{ mul . 60000 }};
@@ -9,8 +11,6 @@ var est_reading_ms_25 = {{ mul . 15000 }};
 {{- end -}}
 {{- end -}}
 window.dataLayer.push({
-  'kind': {{ $page.Kind }},
-  'type': {{ $page.Type }},
 {{ if and $page.IsPage (eq $page.Type "post") -}}
 {{- with $page.ReadingTime -}}
   'est_reading_min': {{ . }},
