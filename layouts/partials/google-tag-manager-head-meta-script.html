@@ -1,0 +1,11 @@
+{{ if .IsPage }}
+<script>
+dataLayer.push('est_reading_min': {{.ReadingTime}});
+dataLayer.push('est_reading_ms_100': {{mul .ReadingTime 60000}});
+dataLayer.push('est_reading_ms_75': {{mul .ReadingTime 45000}});
+dataLayer.push('est_reading_ms_50': {{mul .ReadingTime 30000}});
+dataLayer.push('est_reading_ms_25': {{mul .ReadingTime 15000}});
+dataLayer.push('categories': [{{delimit (apply .Params.categories "string" ".") ", ")}}])
+dataLayer.push('post_title': "{{.Params.title}}")
+</script>
+{{ end }}
