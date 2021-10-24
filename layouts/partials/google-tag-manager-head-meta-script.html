@@ -1,11 +1,43 @@
-{{ if .IsPage }}
 <script>
-dataLayer.push('est_reading_min': {{.ReadingTime}});
-dataLayer.push('est_reading_ms_100': {{mul .ReadingTime 60000}});
-dataLayer.push('est_reading_ms_75': {{mul .ReadingTime 45000}});
-dataLayer.push('est_reading_ms_50': {{mul .ReadingTime 30000}});
-dataLayer.push('est_reading_ms_25': {{mul .ReadingTime 15000}});
-dataLayer.push('categories': [{{delimit (apply .Params.categories "string" ".") ", ")}}])
-dataLayer.push('post_title': "{{.Params.title}}")
+{{- $page := . -}}
+{{- if $page.IsPage -}}
+{{- with $page.ReadingTime -}}
+dataLayer.push('est_reading_min': {{ . -}});
+dataLayer.push('est_reading_ms_100': {{ mul . 60000 -}});
+dataLayer.push('est_reading_ms_75': {{ mul . 45000 -}});
+dataLayer.push('est_reading_ms_50': {{ mul . 30000 -}});
+dataLayer.push('est_reading_ms_25': {{ mul . 15000 -}});
+{{- end -}}
+{{- with $page.Params.categories -}}
+dataLayer.push('post_categories': {{apply . "urlize" "."}});
+{{- end -}}
+{{- with $page.Params.title -}}
+dataLayer.push('post_title': "{{.}}");
+{{- end -}}
+{{- else if eq $page.Kind "taxonomy" -}}
+dataLayer.push('list_type': "category");
+{{- with $page.Pages -}}
+{{- $page_count := len . -}}
+{{- with $.Site.Params.paginate -}}
+{{- if lt . $page_count -}}
+{{- $page_count = . -}}
+{{- end -}}
+{{- end -}}
+dataLayer.push('page_count': {{$page_count}});
+{{- end -}}
+{{- with $page.Dir -}}
+dataLayer.push('category': "{{path.Base .}}");
+{{- end -}}
+{{- else if $page.IsHome -}}
+dataLayer.push('list_type': "homepage");
+{{- with $page.Pages -}}
+{{- $page_count := len . -}}
+{{- with $.Site.Params.paginate -}}
+{{- if lt . $page_count -}}
+{{- $page_count = . -}}
+{{- end -}}
+{{- end -}}
+dataLayer.push('page_count': {{$page_count}});
+{{- end -}}
+{{- end -}}
 </script>
-{{ end }}
