@@ -2,6 +2,7 @@
 {{- $page := . -}}
 window.dataLayer.push({
   'kind': {{ $page.Kind }},
+  'type': {{ $page.Type }},
 {{ if $page.IsPage -}}
 {{- with $page.ReadingTime -}}
   'est_reading_min': {{ . }},
