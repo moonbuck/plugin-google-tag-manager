@@ -1,7 +1,8 @@
 <script>
 {{- $page := . -}}
-{{- if $page.IsPage -}}
 window.dataLayer.push({
+  'kind': {{ $page.Kind }},
+{{ if $page.IsPage -}}
 {{- with $page.ReadingTime -}}
   'est_reading_min': {{ . }},
   'est_reading_ms_100': {{ mul . 60000 }},
@@ -9,17 +10,14 @@ window.dataLayer.push({
   'est_reading_ms_50': {{ mul . 30000 }},
   'est_reading_ms_25': {{ mul . 15000 }},
 {{- end -}}
-{{- with $page.Params.categories -}}
+{{ with $page.Params.categories -}}
   'post_categories': {{apply . "urlize" "."}},
 {{- end -}}
-{{- with $page.Params.title -}}
+{{ with $page.Params.title -}}
   'post_title': "{{.}}"
 {{- end -}}
-});
 {{- else if eq $page.Kind "taxonomy" -}}
-window.dataLayer.push({
-  'list_type': "category",
-{{- with $page.Pages -}}
+{{ with $page.Pages -}}
 {{- $page_count := len . -}}
 {{- with $.Site.Params.paginate -}}
 {{- if lt . $page_count -}}
@@ -28,14 +26,11 @@ window.dataLayer.push({
 {{- end -}}
   'page_count': {{$page_count}},
 {{- end -}}
-{{- with $page.Dir -}}
+{{ with $page.Dir -}}
   'category': "{{path.Base .}}"
 {{- end -}}
-});
 {{- else if $page.IsHome -}}
-window.dataLayer.push({
-  'list_type': "homepage",
-{{- with $page.Pages -}}
+{{ with $page.Pages -}}
 {{- $page_count := len . -}}
 {{- with $.Site.Params.paginate -}}
 {{- if lt . $page_count -}}
@@ -44,6 +39,6 @@ window.dataLayer.push({
 {{- end -}}
   'page_count': {{$page_count}}
 {{- end -}}
-});
 {{- end -}}
+});
 </script>
