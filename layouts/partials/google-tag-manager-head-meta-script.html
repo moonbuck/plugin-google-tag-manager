@@ -27,7 +27,7 @@ window.dataLayer.push({
   'page_count': {{$page_count}},
 {{- end -}}
 {{ with $page.Dir -}}
-  'category': "{{path.Base .}}"
+  'taxonomy_category': "{{path.Base .}}"
 {{- end -}}
 {{- else if $page.IsHome -}}
 {{ with $page.Pages -}}
