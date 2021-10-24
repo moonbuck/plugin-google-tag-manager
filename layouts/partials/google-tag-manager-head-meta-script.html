@@ -2,11 +2,11 @@
 {{- $page := . -}}
 {{- if $page.IsPage -}}
 {{- with $page.ReadingTime -}}
-dataLayer.push('est_reading_min': {{ . -}});
-dataLayer.push('est_reading_ms_100': {{ mul . 60000 -}});
-dataLayer.push('est_reading_ms_75': {{ mul . 45000 -}});
-dataLayer.push('est_reading_ms_50': {{ mul . 30000 -}});
-dataLayer.push('est_reading_ms_25': {{ mul . 15000 -}});
+dataLayer.push('est_reading_min': {{ . }});
+dataLayer.push('est_reading_ms_100': {{ mul . 60000 }});
+dataLayer.push('est_reading_ms_75': {{ mul . 45000 }});
+dataLayer.push('est_reading_ms_50': {{ mul . 30000 }});
+dataLayer.push('est_reading_ms_25': {{ mul . 15000 }});
 {{- end -}}
 {{- with $page.Params.categories -}}
 dataLayer.push('post_categories': {{apply . "urlize" "."}});
