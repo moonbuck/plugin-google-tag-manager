@@ -3,7 +3,7 @@
 window.dataLayer.push({
   'kind': {{ $page.Kind }},
   'type': {{ $page.Type }},
-{{ if $page.IsPage -}}
+{{ if and $page.IsPage (eq $page.Type "post") -}}
 {{- with $page.ReadingTime -}}
   'est_reading_min': {{ . }},
   'est_reading_ms_100': {{ mul . 60000 }},
