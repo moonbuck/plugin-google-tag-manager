@@ -3,7 +3,7 @@
 {{- if $page.IsPage -}}
 window.dataLayer.push({
 {{- with $page.ReadingTime -}}
-'est_reading_min': {{ . }},
+  'est_reading_min': {{ . }},
   'est_reading_ms_100': {{ mul . 60000 }},
   'est_reading_ms_75': {{ mul . 45000 }},
   'est_reading_ms_50': {{ mul . 30000 }},
