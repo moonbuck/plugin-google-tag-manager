@@ -3,8 +3,8 @@
     "title": "Google Tag Manager",
     "description": "Injects scripts for using Google Tag Manager.",
     "includes": [
-        "HEAD_TOP.google-tag-manager-head-script.html",
-        "ABOVE_HEADER.google-tag-manager-header-script.html"
+        /*"HEAD_TOP.google-tag-manager-head-script.html",
+        "ABOVE_HEADER.google-tag-manager-header-script.html"*/
     ],
     "fields": [
         {
