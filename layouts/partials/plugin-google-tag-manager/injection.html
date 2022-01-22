@@ -1,0 +1,28 @@
+{{- /* Resolve the plugin parameter values. */ -}}
+{{- partial "plugin-google-tag-manager/load-parameters.html" . -}}
+
+{{- with (.Scratch.Get "plugin-google-tag-manager.Parameters") -}}
+
+  {{- if .Config.DebugPrint -}}
+    {{- printf "\n<!--
+plugin-google-tag-manager.Parameters:\n%s\n-->" (jsonify .) | safeHTML -}}
+  {{- end -}}
+
+  {{- /* Insert the plugin version and build time */ -}}
+  {{- $time := (time (sub now.Unix 28800)).Format "Jan 2 at 15:04" -}}
+  {{- $version := .Config.Version -}}
+  {{ printf "\n<!-- Google Tag Manager v%s (built on %s) -->\n" $version $time | safeHTML }}
+  
+  {{- $source_dir := "js/plugin-google-tag-manager/" -}}
+  {{- $template_name := "google-tag-manager.js" -}}
+  {{- $source := path.Join $source_dir $template_name -}}
+  {{- $target := path.Join "assets" $source -}}
+  
+  {{- $script := resources.Get $source | resources.ExecuteAsTemplate $target $ -}}
+  {{- if .Config.MinifyScript }}{{ $script = $script | minify }}{{ end -}}
+  {{- if .Config.Fingerprint }}{{ $script = $script | fingerprint }}{{ end -}}  
+  
+  {{- print "\n" -}}
+<script src="{{ $script.Permalink }}"></script>
+
+{{- end }}
