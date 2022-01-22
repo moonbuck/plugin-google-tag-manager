@@ -58,7 +58,7 @@ window.dataLayer.push({ page_count: {{ $page_count }} });
   {{- end }}
 {{- end -}}
 
-{{- with .Scratch.Get "plugin-google-tag-manager.Parameters" -}}
+{{- with (.Scratch.Get "plugin-google-tag-manager.Parameters").Config -}}
 
 // Prepend the <noscript> element once the DOM has loaded.
 document.addEventListener('DOMContentLoaded',() => {

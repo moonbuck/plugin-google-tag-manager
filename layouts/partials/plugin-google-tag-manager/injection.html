@@ -4,8 +4,7 @@
 {{- with (.Scratch.Get "plugin-google-tag-manager.Parameters") -}}
 
   {{- if .Config.DebugPrint -}}
-    {{- printf "\n<!--
-plugin-google-tag-manager.Parameters:\n%s\n-->" (jsonify .) | safeHTML -}}
+    {{- printf "\n<!--plugin-google-tag-manager.Parameters:\n%s\n-->" (jsonify .) | safeHTML -}}
   {{- end -}}
 
   {{- /* Insert the plugin version and build time */ -}}
