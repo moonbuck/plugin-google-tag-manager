@@ -1,5 +1,5 @@
 {
-    "version": "3.0.0",
+    "version": "3.0.1",
     "title": "Google Tag Manager",
     "description": "Injects Javascript for using Google Tag Manager.",
     "includes": [ "plugin-google-tag-manager/injection.html" ]

@@ -4,11 +4,11 @@ window.dataLayer = window.dataLayer || [];
 // Push the page kind and type into the data layer.
 window.dataLayer.push({ kind: '{{ .Kind }}', type: '{{ .Type }}' });
 
-// Handle post specific data.
+{{- /* Handle post specific data. */ -}}
 {{ if (eq "post" .Type) -}}
 
-  // Push the estimated reading time values for posts.
   {{- with .ReadingTime -}}
+// Push the estimated reading time values for posts.
 window.dataLayer.push({
   est_reading_min: {{ . }},
   est_reading_ms_100: {{ mul . 60000 }},
@@ -18,60 +18,47 @@ window.dataLayer.push({
  });
   {{- end -}}
   
-  // Push the page categories into the data layer.
   {{ with .Params.categories -}}
+// Push the page categories into the data layer.
 window.dataLayer.push({ post_categories: {{ apply . "urlize" "." }} });
   {{- end }}
 
-  // Push the title into the data layer.
   {{ with .Title -}}
+// Push the title into the data layer.
 window.dataLayer.push({ post_title: '{{ . }}' });
   {{ end -}}
 
-// Handle taxonomy pages
+{{- /* Handle taxonomy pages */ -}}
 {{- else if (eq .Kind "taxonomy") -}}
 
-  // Push the page count into the data layer.
   {{ with .Pages -}}
     {{- $page_count := len . -}}
     {{- with site.Params.paginate -}}
       {{- if (lt . $page_count) }}{{ $page_count = . }}{{ end -}}
     {{- end -}}
+// Push the page count into the data layer.
 window.dataLayer.push({ page_count: {{ $page_count }} });
   {{- end }}
   
-  // Push the category name into the data layer.
   {{ with .Dir -}}
+// Push the category name into the data layer.
 window.dataLayer.push({ taxonomy_category: '{{ path.Base . }}'});
   {{- end }}
   
-// Handle the home page.  
+{{- /* Handle the home page. */ -}}
 {{- else if .IsHome -}}
   
-  // Push the page count into the data layer.
   {{ with .Pages -}}
     {{- $page_count := len . -}}
     {{- with site.Params.paginate -}}
       {{- if (lt . $page_count) }}{{ $page_count = . }}{{ end -}}
     {{- end -}}
+// Push the page count into the data layer.
 window.dataLayer.push({ page_count: {{ $page_count }} });
   {{- end }}
 {{- end -}}
 
 {{- with (.Scratch.Get "plugin-google-tag-manager.Parameters").Config -}}
-
-// Prepend the <noscript> element once the DOM has loaded.
-document.addEventListener('DOMContentLoaded',() => {
-  let noscript = document.createElement('NOSCRIPT');
-  let iframe = document.createElement('IFRAME');
-  iframe.src = 'https://www.googletagmanager.com/ns.html?id={{ .ContainerID }}'
-  iframe.height = 0;
-  iframe.width = 0;
-  iframe.style.display = 'none';
-  iframe.style.visibility = 'hidden';
-  noscript.append(iframe);
-  document.body.prepend(noscript);
-});
 
 // Invoke the tag manager code.
 (function(w,d,s,l,i){
