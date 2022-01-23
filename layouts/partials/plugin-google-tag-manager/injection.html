@@ -1,5 +1,7 @@
 {{- /* Resolve the plugin parameter values. */ -}}
+{{- if not (.Scratch.Get "plugin-google-tag-manager.Parameters") -}}
 {{- partial "plugin-google-tag-manager/load-parameters.html" . -}}
+{{- end -}}
 
 {{- with (.Scratch.Get "plugin-google-tag-manager.Parameters") -}}
 
