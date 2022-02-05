@@ -1,6 +1,6 @@
 {
-  "version": "3.0.3",
-  "title": "Google Tag Manager",
+  "version": "3.0.4",
+  "title": "Moondeer's Google Tag Manager",
   "description": "Injects Javascript for using Google Tag Manager. A README is on the way. See the documented configuration files in the plugin's data directory for where to stick your container ID and feel free to holler at me with any questions.",
   "includes": [ "plugin-google-tag-manager/injection.html" ]
 }
